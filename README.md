@@ -1,0 +1,2 @@
+# BigTrolly
+ Aplikasi Kasir
