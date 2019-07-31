@@ -2,6 +2,9 @@ import React from 'react'
 import {View,Text,TouchableOpacity,Image,StyleSheet,FlatList,AsyncStorage} from 'react-native'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+
+
+
 export default class StockScreen extends React.Component {
     constructor() {
       super()
@@ -19,8 +22,7 @@ export default class StockScreen extends React.Component {
 
     componentDidMount(){
       AsyncStorage.getItem('products').then((value)=>{
-        
-        console.warn(value);
+        console.warn(this.props);
         
         products = JSON.parse(value)
         products.forEach(product => {

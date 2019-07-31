@@ -1,6 +1,7 @@
 import React from 'react'
 import {View,Text,StyleSheet,Dimensions,TextInput,Button,AsyncStorage} from 'react-native'
 import { TextInputMask } from 'react-native-masked-text'
+import {connect} from 'react-redux'
 export default class AddProductScreen extends React.Component {
     constructor() {
         super()

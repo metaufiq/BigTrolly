@@ -6,7 +6,7 @@ import { faStore,faDollarSign,faWarehouse } from '@fortawesome/free-solid-svg-ic
 import StoreScreen from './src/screen/store/StoreScreen'
 import StockStack from './src/screen/stock/StockNavigator'
 import ReportScreen from './src/screen/report/ReportScreen'
-
+import {connect} from 'react-redux'
 
 
 
@@ -19,6 +19,9 @@ StockStack.navigationOptions = {
       activeTintColor: '#108dff',
   },
 }
+
+
+
 
 const TabNavigator = createBottomTabNavigator({
   Home: {
@@ -50,4 +53,10 @@ const TabNavigator = createBottomTabNavigator({
   }
 });
 
-export default createAppContainer(TabNavigator);
+
+function mapStateToProps(state){
+  return {
+    listProduct : state
+  }
+}
+export default connect(mapStateToProps,null)(createAppContainer(TabNavigator));
