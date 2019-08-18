@@ -1,6 +1,6 @@
 
-
-export default (state = 0,action)=>{
+import {AsyncStorage} from 'react-native'
+export default (state = {},action)=>{
     switch(action.type){
         case 'PRODUCT_ADD':
             AsyncStorage.getItem('products').then((value)=>{
@@ -39,6 +39,7 @@ export default (state = 0,action)=>{
                 }
             })
         default:
+            state.listProduct = [{name: 'Coba', sellPrice: 'Cari'}]
             return state
     }
 }

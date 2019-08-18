@@ -2,10 +2,9 @@ import React from 'react'
 import {View,Text,TouchableOpacity,Image,StyleSheet,FlatList,AsyncStorage} from 'react-native'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import {connect} from 'react-redux'
 
-
-
-export default class StockScreen extends React.Component {
+class StockScreen extends React.Component {
     constructor() {
       super()
 
@@ -21,8 +20,9 @@ export default class StockScreen extends React.Component {
     }
 
     componentDidMount(){
+      console.warn(this.props.listProduct);
+      
       AsyncStorage.getItem('products').then((value)=>{
-        console.warn(this.props);
         
         products = JSON.parse(value)
         products.forEach(product => {
@@ -83,3 +83,11 @@ const styles = StyleSheet.create({
       borderColor:'gray',
     },
 });
+
+function mapStateToProps(state){
+  
+  return {
+    listProduct : state
+  }
+}
+export default connect(mapStateToProps,null)(StockScreen);

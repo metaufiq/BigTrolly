@@ -59,4 +59,4 @@ function mapStateToProps(state){
     listProduct : state
   }
 }
-export default connect(mapStateToProps,null)(createAppContainer(TabNavigator));
+export default createAppContainer(TabNavigator)
