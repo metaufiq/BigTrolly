@@ -1,5 +1,5 @@
-export const addProduct = () => {
+export const getProducts = () => {
     return {
-        type: 'PRODUCT_ADD'
+        type: 'PRODUCTS_GET'
     }
 }

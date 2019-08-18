@@ -1,8 +1,10 @@
 import React from 'react'
-import {View,Text,TouchableOpacity,Image,StyleSheet,FlatList,AsyncStorage} from 'react-native'
+import {View,Text,TouchableOpacity,Image,StyleSheet,FlatList,AsyncStorage,componentWillReceiveProps} from 'react-native'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import {connect} from 'react-redux'
+import {getProducts} from '../../actions/'
+import { TextInput } from 'react-native-gesture-handler';
 
 class StockScreen extends React.Component {
     constructor() {
@@ -20,28 +22,27 @@ class StockScreen extends React.Component {
     }
 
     componentDidMount(){
-      console.warn(this.props.listProduct);
       
-      AsyncStorage.getItem('products').then((value)=>{
-        
-        products = JSON.parse(value)
-        products.forEach(product => {
-          this.state.listProduct.push({name: product.name, sellPrice: product.sellPrice})
-        });
-      })
+    }
+
+    componentWillReceiveProps(nextProps){
+      console.log(nextProps);
+      
     }
     
+    
     render() {
-        const {navigate} = this.props.navigation;
         
+        const {navigate} = this.props.navigation;
+
       return (
         <View style={{position:'relative',flex: 1}}>
           <View style={{ position:'relative',  alignItems: 'center',paddingTop:15,marginBottom:30 }}>
             <Text style={{fontSize:24}}>List Produk</Text>
           </View>
+   {}
           <FlatList
-          data= {this.state.listProduct}
-          extraData = {this.state.listProduct}
+          data= {JSON.parse(JSON.stringify(this.props.state.listProduct))}
           renderItem={({item}) =>
               <View style={{ flexDirection: 'row', alignItems:'flex-start',padding:8,borderBottomWidth:0.3,borderBottomColor:'#d6d6d6'}}>
                     <Image
@@ -56,9 +57,8 @@ class StockScreen extends React.Component {
         />
           <TouchableOpacity
               activeOpacity={0.7}
-              onPress={this.clickHandler}
               style={styles.TouchableOpacityStyle}
-              onPress={() => this.props.navigation.navigate('addProduct')}>
+              onPress={this.props.getProducts}>
     
               <FontAwesomeIcon icon={faPlus} color="white" />
           </TouchableOpacity>
@@ -85,9 +85,10 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state){
-  
+  console.log(state)
   return {
-    listProduct : state
+    state : state
   }
 }
-export default connect(mapStateToProps,null)(StockScreen);
+
+export default connect(mapStateToProps,{getProducts})(StockScreen);
