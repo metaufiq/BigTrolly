@@ -7,7 +7,7 @@ export default (state = {},action)=>{
             
             newstate = {}
             newstate = Object.assign(newstate, state)
-            newstate.listProduct.push({name: 'Coba', sellPrice: '1000'})
+            newstate.listProduct.push({name: 'PUSH', sellPrice: '1000'})
             return newstate
         case 'PRODUCT_ADD':
             AsyncStorage.getItem('products').then((value)=>{

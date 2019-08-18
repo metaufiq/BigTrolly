@@ -1,1 +1,1 @@
-export * from './StockActions'
+export * from './ProductsActions'
