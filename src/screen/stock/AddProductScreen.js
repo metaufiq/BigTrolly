@@ -17,7 +17,7 @@ class AddProductScreen extends React.Component {
         title:'Tambah Produk',
     }
     render() {
-        
+        const {navigate} = this.props.navigation;
       return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Text style= {{marginBottom:15}}>Tambah Produk</Text>
@@ -68,17 +68,17 @@ class AddProductScreen extends React.Component {
                 placeholder= "Harga Jual"
             />
 
-
-            <Button title="Tambahkan" onPress={this.props.addProduct} ></Button>
+            
+            <Button title="Tambahkan" onPress={this.checkProduct} ></Button>
             {/* <Button title="Check" onPress={this.checkProduct} ></Button> */}
         </View>
       );
     }
-    // checkProduct = async () => {
-    //     AsyncStorage.getItem('UID123').then((value)=>{
-    //         console.warn(value);
-    //     })
-    //   };
+    checkProduct = () => {
+        console.log("hehe");
+        this.props.addProduct.call()
+        this.props.navigation.navigate('Stock')
+    };
 }
 
 const styles = StyleSheet.create({
