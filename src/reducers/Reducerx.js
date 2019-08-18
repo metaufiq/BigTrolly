@@ -10,40 +10,62 @@ export default (state = {},action)=>{
             newstate.listProduct.push({name: 'PUSH', sellPrice: '1000'})
             return newstate
         case 'PRODUCT_ADD':
+            console.log(state);
+            
             AsyncStorage.getItem('products').then((value)=>{
+                
                 if (!value) {
                     products = []
                     product = {
-                        name: this.state.productName,
-                        sellPrice: this.state.sellPrice,
-                        buyPrice: this.state.buyPrice
+                        name: state.addedProduct.name,
+                        sellPrice: state.addedProduct.sellPrice,
+                        buyPrice: state.addedProduct.buyPrice
                     }
                     products.push(product)
-    
-                    products = JSON.stringify(product)
-                    AsyncStorage.setItem('products', products).then((value)=>{
-                        
-                    })
+                    
+                    products = JSON.stringify(products)
+                    AsyncStorage.setItem('products', products)
                 }
                 else{
-                    console.log("hehe");
-                    
+                    products = JSON.parse(value)
                     product = {
-                        name: this.state.productName,
-                        sellPrice: this.state.sellPrice,
-                        buyPrice: this.state.buyPrice
+                        name: state.addedProduct.name,
+                        sellPrice: state.addedProduct.sellPrice,
+                        buyPrice: state.addedProduct.buyPrice
                     }
 
                     products.push(product)
                     products = JSON.stringify(products)
                     
-                    AsyncStorage.setItem('products', products).then((value)=>{
-                        this.props.navigation.goBack()
-                    })
+                    AsyncStorage.setItem('products', products)
                 }
-            })           
+            }) 
+            product = {
+                name: state.addedProduct.name,
+                sellPrice: state.addedProduct.sellPrice,
+                buyPrice: state.addedProduct.buyPrice
+            }
+            newstate = {}
+            newstate = Object.assign(newstate, state)
+            newstate.listProduct.push(product)
+            return newstate
         default:
-            state.listProduct = [{name: 'Coba', sellPrice: '1000'}]
+            state.listProduct = []
+            state.addedProduct = {
+                name: ' ',
+                sellPrice: ' ',
+                buyPrice: ' ' 
+            }
+            
+            AsyncStorage.getItem('products').then((value)=>{
+                // if (value) {
+                //     newstate = Object.assign(newstate, state)
+                //     newstate.listProduct = JSON.parse(value)
+                //     return newstate        
+                // }
+                state.listProduct = JSON.parse(value)
+            })
             return state
+            
     }
 }

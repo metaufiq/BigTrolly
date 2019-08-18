@@ -2,7 +2,8 @@ import React from 'react'
 import {View,Text,StyleSheet,Dimensions,TextInput,Button,AsyncStorage} from 'react-native'
 import { TextInputMask } from 'react-native-masked-text'
 import {connect} from 'react-redux'
-export default class AddProductScreen extends React.Component {
+import {addProduct} from '../../actions/'
+class AddProductScreen extends React.Component {
     constructor() {
         super()
     
@@ -16,6 +17,7 @@ export default class AddProductScreen extends React.Component {
         title:'Tambah Produk',
     }
     render() {
+        
       return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Text style= {{marginBottom:15}}>Tambah Produk</Text>
@@ -27,6 +29,7 @@ export default class AddProductScreen extends React.Component {
                     this.setState({
                         productName: text
                     })
+                    this.props.state.addedProduct.name = text
                 }}
             />
             <TextInputMask
@@ -36,6 +39,7 @@ export default class AddProductScreen extends React.Component {
                     this.setState({
                     buyPrice: text
                     })
+                    this.props.state.addedProduct.buyPrice = text
                 }}
                 options={{
                     unit: '',
@@ -50,8 +54,10 @@ export default class AddProductScreen extends React.Component {
                 value={this.state.sellPrice}
                 onChangeText={text => {
                     this.setState({
-                    sellPrice: text
+                        sellPrice: text
                     })
+                    console.log(this.props.state.addedProduct.sellPrice);
+                    this.props.state.addedProduct.sellPrice = text
                 }}
                 options={{
                     unit: '',
@@ -63,7 +69,7 @@ export default class AddProductScreen extends React.Component {
             />
 
 
-            <Button title="Tambahkan" onPress={this.addProduct} ></Button>
+            <Button title="Tambahkan" onPress={this.props.addProduct} ></Button>
             {/* <Button title="Check" onPress={this.checkProduct} ></Button> */}
         </View>
       );
@@ -73,44 +79,6 @@ export default class AddProductScreen extends React.Component {
     //         console.warn(value);
     //     })
     //   };
-    addProduct = ()=>{
-        AsyncStorage.getItem('products').then((value)=>{
-            if (!value) {
-                products = []
-                product = {
-                    name: this.state.productName,
-                    sellPrice: this.state.sellPrice,
-                    buyPrice: this.state.buyPrice
-                }
-                products.push(product)
-
-                products = JSON.stringify(product)
-                AsyncStorage.setItem('products', products).then((value)=>{
-                    
-                })
-            }
-            else{
-                AsyncStorage.getItem('products').then((value)=>{
-                    console.warn(value);
-                    
-                    products = JSON.parse(value);
-                    product = {
-                        name: this.state.productName,
-                        sellPrice: this.state.sellPrice,
-                        buyPrice: this.state.buyPrice
-                    }
-
-                    products.push(product)
-                    products = JSON.stringify(products)
-                    
-                    AsyncStorage.setItem('products', products).then((value)=>{
-                        this.props.navigation.goBack()
-                    })
-                })
-            }
-        })
-
-    }
 }
 
 const styles = StyleSheet.create({
@@ -131,4 +99,14 @@ const styles = StyleSheet.create({
         fontSize:20
     }
 });
+
+
+function mapStateToProps(state){
+    console.log(state)
+    return {
+      state : state
+    }
+  }
+  
+  export default connect(mapStateToProps,{addProduct})(AddProductScreen);
 

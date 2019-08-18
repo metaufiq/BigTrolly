@@ -32,6 +32,7 @@ class StockScreen extends React.Component {
     
     
     render() {
+       console.log(this.props.getProducts);
         
         const {navigate} = this.props.navigation;
 
@@ -40,7 +41,6 @@ class StockScreen extends React.Component {
           <View style={{ position:'relative',  alignItems: 'center',paddingTop:15,marginBottom:30 }}>
             <Text style={{fontSize:24}}>List Produk</Text>
           </View>
-   {}
           <FlatList
           data= {JSON.parse(JSON.stringify(this.props.state.listProduct))}
           renderItem={({item}) =>
@@ -58,7 +58,7 @@ class StockScreen extends React.Component {
           <TouchableOpacity
               activeOpacity={0.7}
               style={styles.TouchableOpacityStyle}
-              onPress={this.props.getProducts}>
+              onPress={()=>{navigate('addProduct')}}>
     
               <FontAwesomeIcon icon={faPlus} color="white" />
           </TouchableOpacity>
